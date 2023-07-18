@@ -1,0 +1,23 @@
+{
+	email contact@mahd.dev
+}
+api.zayn.tn {
+	## API Server
+	##   You can change this route to anything, however if you use /api/ then you will have conflicts 
+	##   with the NextJS API routes in the Dashboard
+	handle_path /* {
+		## uri replace /proxy/ /
+		reverse_proxy kong:8000
+	}
+}
+studio.zayn.tn {
+	## Dashboard
+	##   MAKE SURE YOU CHANGE THE PASSWORD BELOW BEFORE UNCOMMENTING THIS SECTION.
+	##   You can create a new password by running `caddy hash-password`
+	handle_path /* {
+		reverse_proxy studio:3000
+		basicauth /* {
+			admin $2a$14$1ZcsHZwUBy8IoOQ6nZrYw.Ug6WU3rBCCx00dguja2GgdZIMg9mS6C
+		}
+	}
+}
